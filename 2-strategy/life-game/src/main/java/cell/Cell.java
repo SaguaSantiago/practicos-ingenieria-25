@@ -23,7 +23,7 @@ public class Cell {
     }
 
     public void print(){
-        colorBehavior.write("O");
+        colorBehavior.write("■");
     }
 
     public void setState (StateBehavior newState){

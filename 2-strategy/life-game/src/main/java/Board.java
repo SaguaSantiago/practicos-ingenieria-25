@@ -5,13 +5,15 @@ import java.util.Random;
 import java.util.Set;
 
 import cell.Cell;
+import cell.color.Blue;
 import cell.state.Alive;
 import cell.state.StateBehavior;
 
 public class Board {
-    static final int INITIAL_SIZE = 40;
-    Cell[][] gameBoard;
-    int size;
+    static final int INITIAL_SIZE = 20;
+    private Cell[][] gameBoard;
+    public boolean isGameOver = false;
+    public int size;
     
     public Board (int size){
         if(size<=0) throw new IllegalArgumentException("size must be greater than 0");
@@ -34,21 +36,21 @@ public class Board {
         Set<Integer> xUsed = new HashSet<>();
         Set<Integer> yUsed = new HashSet<>();
         for(int i=1; i<=cellsAlives; i++){
-            
             int row = rand.nextInt(0, size);
             int col = rand.nextInt(0, size);
-            if(xUsed.contains(row) || yUsed.contains(col)){
+            if(xUsed.contains(row) && yUsed.contains(col)){
                 i--;
                 continue;
             }
             xUsed.add(row);
             yUsed.add(col);
             gameBoard[row][col].setState(new Alive());
+            gameBoard[row][col].setColor(new Blue());
         }
     }
 
     public void initBoard(){
-        int DEFAULT_INITIAL_ALIVES = size/2;
+        int DEFAULT_INITIAL_ALIVES = size/5 * size/5;
         initBoard(DEFAULT_INITIAL_ALIVES);
     }
 

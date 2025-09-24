@@ -41,4 +41,45 @@ public class TestObservers {
         weatherData.setMeasurements(62, 90, 28.1f);
     }
 
+    @Test
+    public void weatherDataChanged () {
+        WeatherData wd = new WeatherData();
+        
+        Observer currentDisplay =
+                new CurrentConditionsDisplay(wd);
+        Observer statisticsDisplay = new StatisticsDisplay(wd);
+        Observer forecastDisplay = new ForecastDisplay(wd);
+
+        wd.registerObserver(forecastDisplay);
+        wd.registerObserver(statisticsDisplay);
+        wd.registerObserver(currentDisplay);
+
+        wd.setMeasurements(10, 5, 100);
+
+        wd.removeObserver(forecastDisplay);
+        wd.removeObserver(statisticsDisplay);
+        wd.removeObserver(currentDisplay);
+
+        WeatherData wd2 = new WeatherData();
+        
+        wd2.registerObserver(forecastDisplay);
+        wd2.registerObserver(statisticsDisplay);
+        wd2.registerObserver(currentDisplay);
+        wd2.setMeasurements(20, 10, 50);
+
+    }
+
+    @Test
+    public void degreeStatisticsTest () {
+        WeatherData weatherData = new WeatherData();
+
+        Observer degreeDisplay = new DegreeStatisticsDisplay(weatherData);
+
+        weatherData.registerObserver(degreeDisplay);
+
+        weatherData.setMeasurements(70, 10, 1000);
+        weatherData.setMeasurements(30, 10, 1000);
+        weatherData.setMeasurements(40, 10, 1000);
+    }    
+
 }
